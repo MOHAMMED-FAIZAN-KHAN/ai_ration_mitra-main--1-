@@ -22,10 +22,11 @@ class AuthService {
   fb.User? get currentFirebaseUser => _firebaseAuth.currentUser;
 
   Future<fb.UserCredential> signInWithGoogle() async {
-    final googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) {
-      throw Exception('Google sign-in was cancelled.');
-    }
+    try {
+      final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        throw Exception('Google sign-in was cancelled.');
+      }
 
     final googleAuth = await googleUser.authentication;
     final credential = fb.GoogleAuthProvider.credential(
