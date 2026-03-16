@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "190475315373",
+    "project_id": "ai-ration-mitra",
+    "storage_bucket": "ai-ration-mitra.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190475315373:android:8f2b2f44af56c14a9bfe24",
+        "android_client_info": {
+          "package_name": "com.example.ai_ration_mitra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190475315373-utub12ndvdipou8silvkoeetl4sb4a7u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ai_ration_mitra",
+            "certificate_hash": "6a68edc55cbd0a1f900287f74a3513e1f4b6c1ea"
+          }
+        },
+        {
+          "client_id": "190475315373-bpdr8dbmt8nmugd1ev8gcdjhh4p9kplm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbe_-0pB14uhLmGSg5xG1kyogTQCBip_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190475315373-bpdr8dbmt8nmugd1ev8gcdjhh4p9kplm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
