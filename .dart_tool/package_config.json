@@ -339,13 +339,13 @@
     },
     {
       "name": "google_maps_flutter",
-      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter-2.15.0",
+      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter-2.16.0",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
     {
       "name": "google_maps_flutter_android",
-      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.19.2",
+      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_android-2.19.3",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
@@ -357,13 +357,13 @@
     },
     {
       "name": "google_maps_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.14.2",
+      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_platform_interface-2.15.0",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
     {
       "name": "google_maps_flutter_web",
-      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.6.1",
+      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/google_maps_flutter_web-0.6.2",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
@@ -489,7 +489,7 @@
     },
     {
       "name": "native_toolchain_c",
-      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/native_toolchain_c-0.17.5",
+      "rootUri": "file:///C:/Users/Devtadin/AppData/Local/Pub/Cache/hosted/pub.dev/native_toolchain_c-0.17.6",
       "packageUri": "lib/",
       "languageVersion": "3.10"
     },
