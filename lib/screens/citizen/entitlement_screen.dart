@@ -70,7 +70,7 @@ class _EntitlementsScreenState extends State<EntitlementsScreen>
               // Your Entitlements Title
               const SectionHeader(title: 'Your Entitlements'),
 
-              // Entitlements List
+              // Entitlements List – now with checkboxes aligned right
               _buildEntitlementsList(entitlements),
               const SizedBox(height: 24),
 
@@ -296,109 +296,56 @@ class _EntitlementsScreenState extends State<EntitlementsScreen>
     );
   }
 
+  // ===================== UPDATED ITEM WIDGET =====================
   Widget _buildEntitlementItem(_EntitlementEntry item) {
-    final isCollected = item.collected;
-
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: isCollected
-            ? AppColors.green.withValues(alpha: 0.08)
-            : Colors.orange.withValues(alpha: 0.08),
-        border: Border.all(
-          color: isCollected
-              ? AppColors.green.withValues(alpha: 0.3)
-              : Colors.orange.withValues(alpha: 0.3),
-        ),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            // ignore: deprecated_member_use
+            color: Colors.grey.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(color: Colors.grey.shade200),
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${item.name} - ${item.quantity} ${item.unit}'),
-                behavior: SnackBarBehavior.floating,
-                duration: const Duration(seconds: 2),
-              ),
-            );
-          },
-          borderRadius: BorderRadius.circular(12),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: isCollected
-                        ? AppColors.green.withValues(alpha: 0.2)
-                        : Colors.orange.withValues(alpha: 0.2),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    item.icon,
-                    color: isCollected ? AppColors.green : Colors.orange,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${item.quantity} ${item.unit}',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: isCollected
-                        ? AppColors.green.withValues(alpha: 0.15)
-                        : Colors.orange.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        isCollected ? Icons.check_circle : Icons.schedule,
-                        size: 14,
-                        color: isCollected ? AppColors.green : Colors.orange,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        isCollected ? 'Collected' : 'Pending',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: isCollected ? AppColors.green : Colors.orange,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              item.name,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
             ),
           ),
-        ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              '${item.quantity} ${item.unit}',
+              style: const TextStyle(color: Colors.grey),
+            ),
+          ),
+          Checkbox(
+            value: item.collected,
+            onChanged: (value) {
+              // Implement update logic here (e.g., call provider to toggle collected status)
+              // For demo, we'll show a snackbar.
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('${item.name} marked as ${value! ? 'collected' : 'pending'}'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
+            activeColor: AppColors.saffron,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          ),
+        ],
       ),
     );
   }

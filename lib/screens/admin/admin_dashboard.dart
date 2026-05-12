@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +10,9 @@ import '../../providers/admin_stock_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/fps_operations_provider.dart';
 import '../../providers/grievance_provider.dart';
+
+// Note: Analytics screen will be imported for route, not used directly here
+// import '../../screens/admin/admin_analytics_screen.dart'; // Not needed here
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -220,6 +225,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       color: AppColors.saffron,
                       onTap: () =>
                           Navigator.pushNamed(context, '/admin/alerts'),
+                    ),
+                    _AdminCard(
+                      icon: Icons.analytics_outlined, // <-- NEW ANALYTICS CARD
+                      title: 'Analytics',
+                      value: 'Insights',
+                      color: Colors.purple,
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/admin/analytics'),
                     ),
                     _AdminCard(
                       icon: Icons.campaign_outlined,

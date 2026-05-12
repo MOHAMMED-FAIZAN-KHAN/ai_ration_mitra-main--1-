@@ -51,11 +51,11 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       if (_enableFirebase && _authService != null) {
-        final firebaseUser = _authService!.currentFirebaseUser;
+        final firebaseUser = _authService?.currentFirebaseUser;
         if (firebaseUser != null) {
           User? cloudUser;
           try {
-            cloudUser = await _authService!.getUserProfileByUid(firebaseUser.uid);
+            cloudUser = await _authService?.getUserProfileByUid(firebaseUser.uid);
           } catch (e) {
             if (!_isFirestoreAccessIssue(e)) {
               rethrow;
@@ -634,8 +634,8 @@ class AuthProvider extends ChangeNotifier {
 
       if (_enableFirebase &&
           _authService != null &&
-          _authService!.currentFirebaseUser == null) {
-        await _authService!.signInAnonymously();
+          _authService?.currentFirebaseUser == null) {
+        await _authService?.signInAnonymously();
       }
 
       final baseUser = registrationUser ??

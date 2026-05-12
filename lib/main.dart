@@ -22,6 +22,7 @@ import 'providers/notification_provider.dart';
 import 'providers/gemini_ai_provider.dart';
 import 'providers/gemini_assistant_provider.dart';
 import 'providers/family_member_provider.dart';
+import 'providers/admin_analytics_provider.dart'; // <-- ADDED
 
 import 'screens/auth/login_type_screen.dart';
 import 'screens/auth/citizen_login_screen.dart';
@@ -66,6 +67,7 @@ import 'screens/admin/stock_detail_screen.dart';
 import 'screens/admin/requisition_management_screen.dart';
 import 'screens/admin/notification_creator_screen.dart';
 import 'screens/admin/login_list_screen.dart';
+import 'screens/admin/admin_analytics_screen.dart'; // <-- ADDED
 
 import 'screens/chat/ai_assistant_screen.dart' as ai_assistant;
 import 'screens/settings/settings_screen.dart';
@@ -155,8 +157,7 @@ void main() async {
             ChangeNotifierProvider(create: (_) => GeminiAIProvider()),
             ChangeNotifierProvider(create: (_) => GeminiAssistantProvider()),
             ChangeNotifierProvider(create: (_) => FamilyMemberProvider()),
-            // ChangeNotifierProvider(create: (_) => BookingProvider()),
-            //  ChangeNotifierProvider(create: (_) => BookingProvider()),
+            ChangeNotifierProvider(create: (_) => AdminAnalyticsProvider()), // <-- ADDED
           ],
           child: const AIRationMitra(),
         ),
@@ -370,6 +371,10 @@ class AIRationMitra extends StatelessWidget {
             return MaterialPageRoute(
               builder: (_) => StockDetailScreen(itemName: itemName),
             );
+
+          case '/admin/analytics': // <-- ADDED ROUTE
+            return MaterialPageRoute(
+                builder: (_) => const AdminAnalyticsScreen());
 
           /// AI ASSISTANT
           case '/ai-assistant':

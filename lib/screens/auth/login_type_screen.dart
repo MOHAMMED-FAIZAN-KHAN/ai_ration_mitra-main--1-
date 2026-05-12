@@ -60,7 +60,7 @@ class _LoginTypeScreenState extends State<LoginTypeScreen>
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/background-img.png',
+              'build/flutter_assets/assets/images/background-img.png',
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) {
                 return Container(
@@ -329,7 +329,7 @@ class _LoginTypeScreenState extends State<LoginTypeScreen>
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Image.asset(
-                      'assets/images/my_logo.png',
+                      'build/flutter_assets/assets/images/my_logo.png',
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) {
                         return const Icon(Icons.image_not_supported_outlined);
@@ -461,7 +461,7 @@ class _LoginTypeScreenState extends State<LoginTypeScreen>
                     child: GestureDetector(
                       onTap: () => Navigator.of(context).maybePop(),
                       child: Image.asset(
-                        'assets/images/author.jpeg',
+                        'build/flutter_assets/assets/images/author.jpeg',
                         fit: BoxFit.contain,
                         errorBuilder: (_, __, ___) => const Icon(
                           Icons.image_not_supported_outlined,

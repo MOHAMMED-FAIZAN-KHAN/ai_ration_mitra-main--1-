@@ -11,7 +11,7 @@ class AuthService {
     GoogleSignIn? googleSignIn,
   })  : _firebaseAuth = firebaseAuth ?? fb.FirebaseAuth.instance,
         _firestore = firestore ?? FirebaseFirestore.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn();
+        _googleSignIn = googleSignIn ?? GoogleSignIn.instance;
 
   final fb.FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firestore;
@@ -21,19 +21,26 @@ class AuthService {
 
   fb.User? get currentFirebaseUser => _firebaseAuth.currentUser;
 
+  // ✅ FIXED GOOGLE SIGN-IN
   Future<fb.UserCredential> signInWithGoogle() async {
-    final googleUser = await _googleSignIn.signIn();
-    if (googleUser == null) {
-      throw Exception('Google sign-in was cancelled.');
+    try {
+      // IMPORTANT: initialize first
+      await _googleSignIn.initialize();
+
+      // New API method
+      final GoogleSignInAccount googleUser =
+          await _googleSignIn.authenticate();
+
+      final googleAuth = googleUser.authentication;
+
+      final credential = fb.GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+
+      return await _firebaseAuth.signInWithCredential(credential);
+    } catch (e) {
+      throw Exception("Google Sign-In failed: $e");
     }
-
-    final googleAuth = await googleUser.authentication;
-    final credential = fb.GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    return _firebaseAuth.signInWithCredential(credential);
   }
 
   Future<fb.UserCredential> signInAnonymously() {
@@ -69,14 +76,10 @@ class AuthService {
 
   Future<User?> getUserProfileByUid(String uid) async {
     final snapshot = await _firestore.collection('users').doc(uid).get();
-    if (!snapshot.exists) {
-      return null;
-    }
+    if (!snapshot.exists) return null;
 
     final data = snapshot.data();
-    if (data == null) {
-      return null;
-    }
+    if (data == null) return null;
 
     return User.fromJson({
       ...data,
@@ -89,11 +92,10 @@ class AuthService {
     required UserType userType,
   }) async {
     final normalized = identifier.trim();
-    if (normalized.isEmpty) {
-      return null;
-    }
+    if (normalized.isEmpty) return null;
 
     QuerySnapshot<Map<String, dynamic>> snapshot;
+
     switch (userType) {
       case UserType.citizen:
         final isAadhaar = RegExp(r'^\d{12}$').hasMatch(normalized);
@@ -107,6 +109,7 @@ class AuthService {
             .limit(1)
             .get();
         break;
+
       case UserType.fpsDealer:
         snapshot = await _firestore
             .collection('users')
@@ -115,6 +118,7 @@ class AuthService {
             .limit(1)
             .get();
         break;
+
       case UserType.admin:
         snapshot = await _firestore
             .collection('users')
@@ -125,9 +129,7 @@ class AuthService {
         break;
     }
 
-    if (snapshot.docs.isEmpty) {
-      return null;
-    }
+    if (snapshot.docs.isEmpty) return null;
 
     final doc = snapshot.docs.first;
     return User.fromJson({
@@ -138,9 +140,7 @@ class AuthService {
 
   Future<User?> getUserProfileByEmail(String email) async {
     final normalizedEmail = email.trim().toLowerCase();
-    if (normalizedEmail.isEmpty) {
-      return null;
-    }
+    if (normalizedEmail.isEmpty) return null;
 
     final snapshot = await _firestore
         .collection('users')
@@ -148,9 +148,7 @@ class AuthService {
         .limit(1)
         .get();
 
-    if (snapshot.docs.isEmpty) {
-      return null;
-    }
+    if (snapshot.docs.isEmpty) return null;
 
     final doc = snapshot.docs.first;
     return User.fromJson({
@@ -161,13 +159,14 @@ class AuthService {
 
   Future<void> upsertUserProfile(User user) async {
     final normalizedEmail = user.email?.trim().toLowerCase();
+
     await _firestore.collection('users').doc(user.id).set(
-          {
-            ...user.toJson(),
-            'email': normalizedEmail,
-            'updatedAt': FieldValue.serverTimestamp(),
-          },
-          SetOptions(merge: true),
-        );
+      {
+        ...user.toJson(),
+        'email': normalizedEmail,
+        'updatedAt': FieldValue.serverTimestamp(),
+      },
+      SetOptions(merge: true),
+    );
   }
 }
